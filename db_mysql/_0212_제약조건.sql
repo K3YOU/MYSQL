@@ -23,7 +23,7 @@ INSERT INTO member2 VALUES(2, '김철수');	-- 오류 발생
 SELECT * FROM member2;
 
 CREATE TABLE member3(
-		num INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+		num INT NOT NULL AUTO_INCREMENT PRIMARY KEY,    # 값을 넣지 않으면 오류가 발생을 하고/ 1씩 증가하고/ 고유번호라서 같은 값을 저장할 수 없다
     name VARCHAR(20) NOT NULL
 );
 INSERT member3(name) VALUES('이만수');

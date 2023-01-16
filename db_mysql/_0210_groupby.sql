@@ -40,3 +40,4 @@ GROUP BY book_kind;
 SELECT book_kind, COUNT(*) FROM book 
 WHERE '2015-01-01' <= book_publishing_date AND book_publishing_date < '2020-01-01' AND book_count <= 3
 GROUP BY book_kind;
+
