@@ -75,7 +75,7 @@ WHERE ENAME LIKE '%S%';
     [개념 7] 두 문자열 데이터를 합치는 CONCAT 함수
         . 두 개의 문자열 데이터를 하나의 데이터로 연결해 주는 함수
 */
--- [실습 7-1] 두 열 사이에 콜롬(:) 넣고 연결하기
+-- !!!!!!!!! [실습 7-1] 두 열 사이에 콜롬(:) 넣고 연결하기
 
 SELECT CONCAT(EMPNO, ENAME),
        CONCAT(EMPNO, CONCAT(' : ', ENAME))

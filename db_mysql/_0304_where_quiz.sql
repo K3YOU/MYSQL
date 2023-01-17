@@ -1,3 +1,11 @@
+use _employee;
+
+
+SELECT * FROM emp;
+SELECT * FROM dept;
+SELECT * FROM salgrade;
+
+
 /*    
     [개념 1] WHERE절
     (1) 정의
@@ -8,11 +16,12 @@
         WHERE [조회할 행을 선별하기 위한 조건식];
 */
 -- [실습 1-1] EMP 테이블의 모든 열 출력하기
-
+desc emp;
 
     
 -- [실습 1-2] 부서 번호가 30인 데이터만 출력하기
-
+SELECT * from dept
+where deptno = 30;
 
 
 ----------------------------------------------------------------------------------------
@@ -34,50 +43,65 @@
 */
 -- [실습 2-1] 부서번호가 30이고, 직책이 SALESMAN인 회원정보 출력하기
 
-
+select * from dept
+where dname = "SALES";
     
 -- [실습 2-2] 부서번호가 30이거나 직책이 CLERK인 회원정보 출력하기
-
+select * from dept
+where dname = "SALES" and deptno = 30;
 
     
 -- [실습 2-3] 연봉이 36000인 회원정보 출력하기
-
+select * from emp
+where sal *12 = 36000;
 
 -- [실습 2-4] 급여가 3000이상인 회원정보 출력하기
-
+select * from emp
+where sal >= 3000;
 
 
 -- [개념 2-5] (문자)대소 비교 연산자(비교 문자열이 문자 하나일 때)
--- [실습 2-4] 사원 이름의 첫 문자가 F와 같거나 F보다 뒤에 있는 회원정보 출력하기
-
+-- !!!!!!!!!!!!! [실습 2-4] 사원 이름의 첫 문자가 F와 같거나 F보다 뒤에 있는 회원정보 출력하기
+select * from emp
+where ename >='F';
 
 
 -- [개념 2-6] (문자)대소 비교 연산자(비교 문자열이 문자 여러 개일 때)
 -- [실습 2-6] 사원 이름에 FORZ를 포함한 문자열보다 알파벳 순서로 앞에 있는 회원정보 출력하기
 
-
-
--- [실습 2-7] 급여가 3000이 아닌 회원정보 출력하기
-
+select * from emp
+where ename >='FORZ';
 
 -- [실습 2-7] 급여가 3000이 아닌 회원정보 출력하기
+select * from emp
+where sal <> 3000;
+
+select * from emp
+where not sal = 3000;
 
 
 
 -- [실습 2-9] 직책이 MANAGER 이거나 SALESMAN 이거나 CLERK인 사원정보 출력하기
 -- [방법 2-9-1]
-
+select * from emp
+where job in( "MANAGER" , "SALESMAN" , "CLERK");
 
    
 -- [방법 2-9-2]
 
+select * from emp
+where job = "MANAGER" or  job = "SALESMAN" or job =  "CLERK";
 
 -- [실습 2-10] 직책이 MANAGER도 아니고 SALESMAN도 아니고 CLERK도 아닌 사원정도 출력하기
 -- [방법 2-10-1]
-
+select * from emp
+where not job in( "MANAGER" , "SALESMAN" , "CLERK");
 
   
 -- [방법 2-10-1]
+
+select * from emp
+where job != "MANAGER" and  job != "SALESMAN" and job !=  "CLERK";
 
 
 
@@ -85,20 +109,26 @@
 
 -- [방법 2-11-1]
 
+select * from emp
+where sal  BETWEEN 2000 and 3000;
 
   
 -- [방법 2-11-2]
 
+select * from emp
+where sal >= 2000 and 3000>= sal;
 
 
 -- [실습 2-12] 사원의 급여가 2000 미만이고 3000 초과하는 사원정보 출력하기
 
 -- [방법 2-12-1]
-
-
+select * from emp
+where sal < 2000 or sal > 3000;
+# and를 쓰면 안된다. -> 둘 다 충졳하지 못 하는 조건이므로
   
 -- [방법 2-12-2]
-
+select * from emp
+where sal not BETWEEN 2000 and  3000;
 
 
 ----------------------------------------------------------------------------------------
@@ -113,20 +143,25 @@
 */
 
 -- [실습 3-1] 사원의 이름이 대문자 S로 시작하는 데이터 조회
-
+SELECT * from emp
+where ename like '%S';
 
 
 -- [실습 3-2] 사원 이름의 두 번째 글자가 L인 사원만 출력
+select * from emp
+where ename like '_L%';
 
 
 
 -- [실습 3-3] 사원 이름에 AM이 포함되어 있는 사원만 출력
-
+select * from emp
+where ename like '%AM%';
 
 
 -- [실습 3-4] 사원 이름에 AM이 포함되어 있지 않은 사원만 출력
 
-
+select * from emp
+where ename not like '%AM%';
 
 ----------------------------------------------------------------------------------------
 
@@ -141,16 +176,20 @@
 
 -- [실습 4-1] 추가수당이 NULL인 사원 출력하기
 -- 잘못된 예)
+select * from emp
+where comm = NULL;
 
 
+-- !!!!!!!!!올바른 예)
 
--- 올바른 예)
-
-
+select * from emp
+where comm is NULL;
 
 -- [실습 4-2] 직속 상관이 있는 사원 데이터만 출력하기
 -- 직속 상관이 있는 사원은 상급자 사원번호(MGR)가 담겨 있다.
 
+select * from emp
+where mgr is not null;
 
 
 ----------------------------------------------------------------------------------------
@@ -173,35 +212,45 @@
 
 -- [문제 5-1] 사원 번호가 7782인 사원정보만 출력하기
 -- [정답 5-1]
+select * from emp
+where empno = 7782;
 
 
 
 -- [문제 5-2] 사원 번호가 7499이고 부서 번호가 30인 사원정보만 출력하기
 -- [정답 5-2]
-
-
+select * from emp
+where empno = 7499 and deptno = 30;
     
 -- [문제 5-3] 부서 번호가 20이거나 직업이 SALESMAN인 사원정보만 출력하기
 -- [정답 5-3]
 
-
+select * from emp
+where job = "SALESMAN" or deptno = 20
+order by deptno ,job;
     
 -- [문제 5-4] 급여가 2500 이상이고 직업이 ANALYST인 사원정보만 출력하기
 -- [정답 5-4]
-
+select * from emp
+where sal >= 2500 and job = "ANALYST";
 
     
 -- [문제 5-5] 부서 번호가 10, 20번인 사원정보만 출력하기
 -- [정답 5-5-1]
-
+select * from emp
+where deptno in( 10 ,20);
 
    
 -- [정답 5-5-2]
+SELECT * from emp
+where deptno = 10 or deptno = 20;
 
 
 
--- [문제 5-6] 사원 이름이 s로 끝나는 사원 데이터를 모두 출력하기
+-- !!!!!! [문제 5-6] 사원 이름이 s로 끝나는 사원 데이터를 모두 출력하기
 -- [정답 5-6] 
+select * from emp
+where ename like "%S";
 
 
 
@@ -209,29 +258,39 @@
 -- 사원번호, 이름, 직책, 급여, 부서번호를 출력하기
 -- [정답 5-7]
 
+select * from emp
+where deptno = 30 and job = "SALESMAN";
 
   
 -- [문제 5-8] 20번, 30번 부서에 근무하고 있는 사원 중 급여가 2000 초과인 사원을 출력하기
 -- [정답 5-8-2]
-
+select * from emp
+where deptno in (20,30) and  sal > 2000
+;
 
     
 -- [문제 5-9] 급여가 2000이상 3000이하 범위 이외의 값을 가진 사원정보만 출력하기
 -- [정답 5-9-1] 
-
+select * from emp
+where sal >= 2000 and 3000>= sal;
 
    
 -- [정답 5-9-2] 
-
+select * from emp
+where sal between 2000 and 3000;
 
 
 -- [문제 5-10] 사원 이름에 E가 포함되어 있는 30번 부서의 사원 중
 -- 급여가 1000 ~ 2000 사이가 아닌 사원이름, 사원번호, 급여, 부서번호를 출력하기
 -- [정답 5-10]
 
+select * from emp
+where deptno = 30 and ename like "%E%" and sal not BETWEEN 1000 and 2000; 
 
   
--- [문제 5-11] 추가 수당이 존재하지 않고 상급자가 있고 직책이 MANAGER, CLERK인 사원 중에서
+-- !!!!!!!!!!!!! [문제 5-11] 추가 수당이 존재하지 않고 상급자가 있고 직책이 MANAGER, CLERK인 사원 중에서    %역활 제대로 읽히기
 -- 사원 이름의 두 번째 글자가 L이 아닌 사원의 정보를 출력하기
 -- [정답 5-11]
 
+select * from emp 
+where comm  is null and mgr is not null and job in("MANAGER", "CLERK") and ename not like "_L%";
